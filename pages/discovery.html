@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discovery | Mentora</title>
+    <link rel="icon" href="../assets/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/notifications.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+            <a href="../index.html" class="header__logo">
+                <img src="../assets/img/logo.png" alt="Logo" class="logo__image">
+                <p class="logo__name">Mentora</p>
+            </a>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-container">
+                <nav class="header__nav">
+                    <a href="../index.html" class="header__nav-item">Home</a>
+                    <a href="./discovery.html" class="header__nav-item header__nav-item--active">Discovery</a>
+                    <a href="./profile.html" class="header__nav-item">My Profile</a>
+                </nav>
+                <nav class="header__nav"></nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <div class="discovery__container">
+            <div class="discovery__header">
+                <h1>Discover Mentors & Mentees</h1>
+                <p>Connect with mentors and mentees that match your interests and goals. Use the filters below to find
+                    the perfect match.</p>
+            </div>
+
+            <div class="filter__container">
+                <form class="filter__form" id="filter__form">
+                    <div class="filter__group">
+                        <label class="filter__label" for="role-filter">Role</label>
+                        <select class="filter__input" id="role-filter">
+                            <option value="">All Roles</option>
+                            <option value="Mentor">Mentor</option>
+                            <option value="Mentee">Mentee</option>
+                        </select>
+                    </div>
+
+                    <div class="filter__group">
+                        <label class="filter__label" for="skills-filter">Skills</label>
+                        <input type="text" class="filter__input" id="skills-filter"
+                            placeholder="e.g. JavaScript, Python">
+                    </div>
+
+                    <div class="filter__group">
+                        <label class="filter__label" for="interests-filter">Interests</label>
+                        <input type="text" class="filter__input" id="interests-filter"
+                            placeholder="e.g. Web Development, AI">
+                    </div>
+
+                    <div class="filter__actions">
+                        <button type="button" class="btn btn--secondary" id="clear-filters-btn">Clear Filters</button>
+                        <button type="submit" class="btn btn--primary">Apply Filters</button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="user-results"></div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 Mentora. All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/js/notificationService.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/header.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof NotificationService !== 'undefined') {
+                NotificationService.init();
+            }
+
+            const dataUsers = [
+                {
+                    id: 1,
+                    name: "Danh Nguyen",
+                    email: "nguyentdanh90@gmail.com",
+                    role: "Mentor",
+                    bio: "Full-stack developer with 8 years of experience. Passionate about helping new developers navigate the tech industry.",
+                    skills: ["JavaScript", "React", "Node.js", "Python"],
+                    interests: ["Web Development", "Career Development", "Open Source"],
+                    avatar: "../assets/img/HuynhThiThanhTruc.jpg"
+                },
+                {
+                    id: 2,
+                    name: "Thao Tran",
+                    email: "ttthao.99@gmail.com",
+                    role: "Mentor",
+                    bio: "UI/UX designer with a background in psychology. I love helping designers improve their user-centered design approach.",
+                    skills: ["UI Design", "UX Research", "Figma", "Adobe XD"],
+                    interests: ["User Experience", "Accessibility", "Design Systems", "Career Transition"],
+                    avatar: "../assets/img/HuynhThiThanhTruc.jpg"
+                },
+                {
+                    id: 3,
+                    name: "Trinh Pham",
+                    email: "phthtrinh.765@gmail.com",
+                    role: "Mentee",
+                    bio: "Computer Science student looking to gain practical experience in software development. Eager to learn and contribute.",
+                    skills: ["Java", "HTML/CSS", "Git"],
+                    interests: ["Mobile Development", "Machine Learning", "Agile Methodology"],
+                    avatar: "../assets/img/HuynhThiThanhTruc.jpg"
+                },
+                {
+                    id: 4,
+                    name: "Bao Le",
+                    email: "letangiabao159@gmail.com",
+                    role: "Mentee",
+                    bio: "Self-taught developer transitioning from marketing. Looking for guidance on building a strong portfolio and technical skills.",
+                    skills: ["HTML/CSS", "JavaScript", "WordPress"],
+                    interests: ["Front-end Development", "Responsive Design", "Career Transition"],
+                    avatar: "../assets/img/HuynhThiThanhTruc.jpg"
+                },
+                {
+                    id: 5,
+                    name: "Huy Ly",
+                    email: "lyhoanghuy78.9@gmail.com",
+                    role: "Mentor",
+                    bio: "Data scientist with expertise in machine learning and AI. I enjoy mentoring aspiring data professionals.",
+                    skills: ["Python", "R", "Machine Learning", "SQL", "TensorFlow"],
+                    interests: ["Data Analysis", "AI Ethics", "Predictive Modeling"],
+                    avatar: "../assets/img/HuynhThiThanhTruc.jpg"
+                },
+                {
+                    id: 6,
+                    name: "Thanh Ho",
+                    email: "hothaothanh158@gmail.com",
+                    role: "Mentee",
+                    bio: "Recent bootcamp graduate skilled in MERN stack. Seeking guidance for entering the industry and developing best practices.",
+                    skills: ["JavaScript", "React", "MongoDB", "Express"],
+                    interests: ["Full-stack Development", "Best Practices", "Code Quality"],
+                    avatar: "../assets/img/HuynhThiThanhTruc.jpg"
+                }
+            ];
+
+            // Display user data
+            function displayUsers(users) {
+                const resultsContainer = document.getElementById('user-results');
+                resultsContainer.innerHTML = '';
+
+                if (users.length === 0) {
+                    resultsContainer.innerHTML = `
+                        <div class="empty-state">
+                            <div class="empty-state__icon">🔍</div>
+                            <h2 class="empty-state__title">No matches found</h2>
+                            <p class="empty-state__message">We couldn't find any users matching your filters. Try adjusting your search criteria or check back later.</p>
+                            <button class="btn btn--primary" id="view__all">View All Users</button>
+                        </div>
+                    `;
+
+                    document.getElementById('view__all').addEventListener('click', function () {
+                        document.getElementById('role-filter').value = '';
+                        document.getElementById('skills-filter').value = '';
+                        document.getElementById('interests-filter').value = '';
+                        displayUsers(dataUsers);
+                    });
+                } else {
+                    const userGrid = document.createElement('div');
+                    userGrid.className = 'user__grid';
+
+                    users.forEach(user => {
+                        const userCard = createUserCard(user);
+                        userGrid.appendChild(userCard);
+                    });
+
+                    resultsContainer.appendChild(userGrid);
+                }
+            }
+
+            // Create user card
+            function createUserCard(user) {
+                const card = document.createElement('div');
+                card.className = 'user-card';
+
+                const avatarSrc = user.avatar || '../assets/img/default-avatar.jpg';
+
+                card.innerHTML = `
+                    <div class="user-card__header">
+                        <img src="${avatarSrc}" alt="${user.name}" class="user-card__avatar">
+                        <h3 class="user-card__name">${user.name}</h3>
+                        <span class="user-card__role user-card__role--${user.role.toLowerCase()}">${user.role}</span>
+                    </div>
+                    <div class="user-card__body">
+                        <div class="user-card__section">
+                            <h4 class="user-card__section-title">Bio</h4>
+                            <p class="user-card__bio">${user.bio}</p>
+                        </div>
+                        <div class="user-card__section">
+                            <h4 class="user-card__section-title">Skills</h4>
+                            <div class="user-card__tags">
+                                ${user.skills.map(skill => `<span class="user-card__tag">${skill}</span>`).join('')}
+                            </div>
+                        </div>
+                        <div class="user-card__section">
+                            <h4 class="user-card__section-title">Interests</h4>
+                            <div class="user-card__tags">
+                                ${user.interests.map(interest => `<span class="user-card__tag">${interest}</span>`).join('')}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="user-card__footer">
+                        <button class="btn btn--primary">Connect</button>
+                    </div>
+                `;
+
+                return card;
+            }
+
+            // Apply filters
+            document.getElementById('filter__form').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const roleFilter = document.getElementById('role-filter').value;
+                const skillsFilter = document.getElementById('skills-filter').value.toLowerCase().trim();
+                const interestsFilter = document.getElementById('interests-filter').value.toLowerCase().trim();
+
+                const filteredUsers = dataUsers.filter(user => {
+                    if (roleFilter && user.role !== roleFilter) {
+                        return false;
+                    }
+
+                    if (skillsFilter) {
+                        const skillsMatch = user.skills.some(skill =>
+                            skill.toLowerCase().includes(skillsFilter));
+                        if (!skillsMatch) {
+                            return false;
+                        }
+                    }
+
+                    if (interestsFilter) {
+                        const interestsMatch = user.interests.some(interest =>
+                            interest.toLowerCase().includes(interestsFilter));
+                        if (!interestsMatch) {
+                            return false;
+                        }
+                    }
+
+                    return true;
+                });
+
+                displayUsers(filteredUsers);
+            });
+
+            // Clear filters
+            document.getElementById('clear-filters-btn').addEventListener('click', function () {
+                document.getElementById('role-filter').value = '';
+                document.getElementById('skills-filter').value = '';
+                document.getElementById('interests-filter').value = '';
+                displayUsers(dataUsers);
+            });
+
+            displayUsers(dataUsers);
+
+            // Click Connect button
+            document.addEventListener('click', function (e) {
+                if (e.target.classList.contains('btn') && e.target.textContent === 'Connect') {
+                    if (!checkIfLoggedIn()) {
+                        if (typeof NotificationService !== 'undefined') {
+                            NotificationService.warning('Please log in to connect with other users');
+                        }
+                        window.location.href = './login.html';
+                        return;
+                    }
+
+                    const userCard = e.target.closest('.user-card');
+                    const userName = userCard.querySelector('.user-card__name').textContent;
+
+                    if (typeof NotificationService !== 'undefined') {
+                        NotificationService.success(`Connection request sent to ${userName}!`);
+                    }
+
+                    e.target.textContent = 'Request Sent';
+                    e.target.disabled = true;
+                    e.target.classList.add('btn--secondary');
+                    e.target.classList.remove('btn--primary');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

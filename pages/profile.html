@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile | Mentora</title>
+    <link rel="icon" href="../assets/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/notifications.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+            <a href="../index.html" class="header__logo">
+                <img src="../assets/img/logo.png" alt="Logo" class="logo__image">
+                <p class="logo__name">Mentora</p>
+            </a>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-container">
+                <nav class="header__nav">
+                    <a href="../index.html" class="header__nav-item">Home</a>
+                    <a href="./discovery.html" class="header__nav-item">Discovery</a>
+                    <a href="./profile.html" class="header__nav-item header__nav-item--active">My Profile</a>
+                </nav>
+                <nav class="header__nav"></nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <div class="profile__container">
+            <div class="profile__card">
+                <div class="profile__header">
+                    <div class="profile__avatar">
+                        <img src="../assets/img/HuynhThiThanhTruc.jpg" alt="Profile avatar" id="profile__avatar">
+                    </div>
+                    <div>
+                        <h1 class="profile__name" id="profile__name">Loading...</h1>
+                        <span class="profile__role" id="profile__role">Loading...</span>
+                    </div>
+                </div>
+
+                <div class="profile__section">
+                    <h3>Bio</h3>
+                    <p id="profile-bio">Loading profile information...</p>
+                </div>
+
+                <div class="profile__section">
+                    <h3>Skills</h3>
+                    <p id="profile-skills">Loading skills...</p>
+                </div>
+
+                <div class="profile__section">
+                    <h3>Interests</h3>
+                    <p id="profile-interests">Loading interests...</p>
+                </div>
+
+                <div class="profile__actions">
+                    <a href="./profile-edit.html" class="btn btn--primary">Edit Profile</a>
+                    <button class="btn btn--secondary logout-btn">Log Out</button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 Mentora. All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/js/notificationService.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/header.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof NotificationService !== 'undefined') {
+                NotificationService.init();
+            }
+
+            // Not logged in => show warning and redirect to login page
+            if (!checkIfLoggedIn()) {
+                if (typeof NotificationService !== 'undefined') {
+                    NotificationService.warning('Please log in to view your profile');
+                }
+                window.location.href = './login.html';
+                return;
+            }
+
+            // Fetch user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('user_data')) || {};
+
+            document.getElementById('profile__name').textContent = userData.name || 'Demo User';
+            document.getElementById('profile__role').textContent = userData.role || 'Mentee';
+            document.getElementById('profile-bio').textContent = userData.bio || 'No bio added yet.';
+            document.getElementById('profile-skills').textContent = userData.skills?.join(', ') || 'No skills added yet.';
+            document.getElementById('profile-interests').textContent = userData.interests?.join(', ') || 'No interests added yet.';
+        });
+    </script>
+</body>
+
+</html>

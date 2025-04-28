@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mentora</title>
+    <link rel="icon" href="./assets/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="./assets/css/main.css">
+    <link rel="stylesheet" href="./assets/css/notifications.css">
+    <link rel="stylesheet" href="./assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+            <a href="index.html" class="header__logo">
+                <img src="./assets/img/logo.png" alt="Logo" class="logo__image">
+                <p class="logo__name">Mentora</p>
+            </a>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-container">
+                <nav class="header__nav">
+                    <a href="index.html" class="header__nav-item header__nav-item--active">Home</a>
+                    <a href="./pages/discovery.html" class="header__nav-item">Discovery</a>
+                    <a href="./pages/profile.html" class="header__nav-item hidden">My Profile</a>
+                </nav>
+                <nav class="header__nav">
+                    <a href="./pages/login.html" class="header__nav-item">Login</a>
+                    <a href="./pages/register.html" class="header__nav-item">Sign Up</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <h1 class="hero__title light-text">Find your perfect Mentor or Mentee at Mentora</h1>
+        <p class="hero__subtitle light-text">Connecting aspiring learners with experienced mentors across the world.</p>
+        <a href="./pages/register.html" class="btn btn--primary">Get Started</a>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="about">
+        <h2 class="section__title">About Mentora</h2>
+        <p class="about__text">Mentora is a platform dedicated to connecting individuals seeking mentorship with
+            those willing to share their knowledge and experience. Whether you're looking to grow professionally,
+            pivot your career, or simply learn a new skill, Mentora makes it easy to find the right mentor or mentee
+            for you.</p>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features">
+        <h2 class="section__title light-text">Why Choose Mentora?</h2>
+        <div class="grid">
+            <div class="card">
+                <img src="./assets/img/easy_to_use.jpg" alt="Feature 1" class="card__image">
+                <div class="card__body">
+                    <h3 class="card__title">Easy to Use</h3>
+                    <p class="card__text">Our intuitive interface makes connecting with others simple and enjoyable.
+                    </p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./assets/img/personalized_matching.jpg" alt="Feature 2" class="card__image">
+                <div class="card__body">
+                    <h3 class="card__title">Personalized Matching</h3>
+                    <p class="card__text">We help you find matches based on shared skills, interests, and goals.</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="./assets/img/global_community.jpg" alt="Feature 3" class="card__image">
+                <div class="card__body">
+                    <h3 class="card__title">Global Community</h3>
+                    <p class="card__text">Connect with mentors and mentees from different cultures and backgrounds
+                        worldwide.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- HOW IT WORKS SECTION -->
+    <section class="how-it-works">
+        <h2 class="section__title">How It Works</h2>
+        <ol class="how-it-works__steps">
+            <li>Create your mentor or mentee profile.</li>
+            <li>Browse and filter profiles based on your interests and goals.</li>
+            <li>Send a connection request and start learning or guiding!</li>
+        </ol>
+    </section>
+
+    <!-- STORIES SECTION -->
+    <section class="stories">
+        <h2 class="section__title light-text">Success Stories</h2>
+        <div class="grid">
+            <div class="card">
+                <p class="card__text">"Thanks to Mentora, I found an incredible mentor who helped me transition into
+                    tech!"</p>
+                <p class="card__author">- Alex Nguyen</p>
+            </div>
+            <div class="card">
+                <p class="card__text">"Being a mentor has been a rewarding experience. Mentora made it so easy to
+                    connect!"</p>
+                <p class="card__author">- Maria Smith</p>
+            </div>
+            <div class="card">
+                <p class="card__text">"I'm grateful to Mentora for helping me mentor someone passionate about UI/UX."
+                </p>
+                <p class="card__author">- David Lee</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- CALL TO ACTION -->
+    <section class="cta">
+        <h2 class="section__title">Ready to level up your journey?</h2>
+        <a href="./pages/register.html" class="btn btn--primary">Join Mentora Today</a>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 Mentora. All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="./assets/js/notificationService.js"></script>
+    <script src="./assets/js/auth.js"></script>
+    <script src="./assets/js/header.js"></script>
+</body>
+
+</html>

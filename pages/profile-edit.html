@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Profile | Mentora</title>
+    <link rel="icon" href="../assets/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/notifications.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+            <a href="../index.html" class="header__logo">
+                <img src="../assets/img/logo.png" alt="Logo" class="logo__image">
+                <p class="logo__name">Mentora</p>
+            </a>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-container">
+                <nav class="header__nav">
+                    <a href="../index.html" class="header__nav-item">Home</a>
+                    <a href="./discovery.html" class="header__nav-item">Discovery</a>
+                    <a href="./profile.html" class="header__nav-item header__nav-item--active">My Profile</a>
+                </nav>
+                <nav class="header__nav"></nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <div class="auth-container">
+            <form id="profile-edit-form" class="form">
+                <div class="form__logo">
+                    <img src="../assets/img/logo.png" alt="Logo">
+                </div>
+
+                <h1 class="form__title">Edit Your Profile</h1>
+
+                <div class="form__group">
+                    <label for="name" class="form__label">Full Name</label>
+                    <input type="text" id="name" class="form__input" required>
+                    <div id="name-error" class="form__error">Please enter your name</div>
+                </div>
+
+                <div class="form__group">
+                    <label for="email" class="form__label">Email</label>
+                    <input type="email" id="email" class="form__input" readonly>
+                    <div id="email-error" class="form__error">Please enter a valid email</div>
+                </div>
+
+                <div class="form__group">
+                    <label class="form__label">I am a:</label>
+                    <div class="form__radio-group">
+                        <div class="form__radio-option">
+                            <input type="radio" id="role-mentee" name="role" value="Mentee" class="form__radio">
+                            <label for="role-mentee">Mentee</label>
+                        </div>
+                        <div class="form__radio-option">
+                            <input type="radio" id="role-mentor" name="role" value="Mentor" class="form__radio">
+                            <label for="role-mentor">Mentor</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form__group">
+                    <label for="bio" class="form__label">Bio</label>
+                    <textarea id="bio" class="form__textarea" rows="4"></textarea>
+                </div>
+
+                <div class="form__group">
+                    <label for="skills" class="form__label">Skills (comma separated)</label>
+                    <input type="text" id="skills" class="form__input">
+                </div>
+
+                <div class="form__group">
+                    <label for="interests" class="form__label">Interests (comma separated)</label>
+                    <input type="text" id="interests" class="form__input">
+                </div>
+
+                <div class="form__actions">
+                    <button type="button" id="discard-btn" class="btn btn--secondary">Discard</button>
+                    <button type="submit" class="btn btn--primary">Save Changes</button>
+                </div>
+            </form>
+
+            <div class="delete__section">
+                <h2>Delete Profile</h2>
+                <p>Warning: This action cannot be undone. Deleting your profile will remove all your data.</p>
+                <button id="delete-profile-btn" class="btn btn--danger">Delete Profile</button>
+            </div>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 Mentora. All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/js/notificationService.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/header.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof NotificationService !== 'undefined') {
+                NotificationService.init();
+            }
+
+            // Not logged in => show warning and redirect to login page
+            if (!checkIfLoggedIn()) {
+                if (typeof NotificationService !== 'undefined') {
+                    NotificationService.warning('Please log in to edit your profile');
+                }
+                window.location.href = './login.html';
+                return;
+            }
+
+            const userData = JSON.parse(localStorage.getItem('user_data')) || {};
+
+            document.getElementById('name').value = userData.name || '';
+            document.getElementById('email').value = userData.email || '';
+            document.getElementById('bio').value = userData.bio || '';
+            document.getElementById('skills').value = userData.skills ? userData.skills.join(', ') : '';
+            document.getElementById('interests').value = userData.interests ? userData.interests.join(', ') : '';
+
+            if (userData.role === 'Mentor') {
+                document.getElementById('role-mentor').checked = true;
+            } else {
+                document.getElementById('role-mentee').checked = true;
+            }
+
+            // Discard button
+            document.getElementById('discard-btn').addEventListener('click', function () {
+                window.location.href = './profile.html';
+            });
+
+            // Submit form Edit Profile
+            document.getElementById('profile-edit-form').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                const name = document.getElementById('name').value.trim();
+                const role = document.querySelector('input[name="role"]:checked').value;
+                const bio = document.getElementById('bio').value.trim();
+                const skillsInput = document.getElementById('skills').value.trim();
+                const interestsInput = document.getElementById('interests').value.trim();
+
+                if (!name) {
+                    document.getElementById('name-error').classList.add('form__error--show');
+                    return;
+                }
+
+                const skills = skillsInput ? skillsInput.split(',').map(item => item.trim()) : [];
+                const interests = interestsInput ? interestsInput.split(',').map(item => item.trim()) : [];
+
+                const userData = JSON.parse(localStorage.getItem('user_data'));
+
+                userData.name = name;
+                userData.role = role;
+                userData.bio = bio;
+                userData.skills = skills;
+                userData.interests = interests;
+
+                localStorage.setItem('user_data', JSON.stringify(userData));
+
+                const users = JSON.parse(localStorage.getItem('registered_users')) || [];
+                const userIndex = users.findIndex(u => u.email === userData.email);
+
+                if (userIndex !== -1) {
+                    users[userIndex] = userData;
+                    localStorage.setItem('registered_users', JSON.stringify(users));
+                }
+
+                if (typeof NotificationService !== 'undefined') {
+                    NotificationService.success('Profile updated successfully!');
+                }
+
+                window.location.href = './profile.html';
+            });
+
+            // Delete Profile button
+            document.getElementById('delete-profile-btn').addEventListener('click', function () {
+                const confirmed = confirm('Are you sure you want to delete your profile data? This action cannot be undone.');
+
+                if (confirmed) {
+                    const userData = JSON.parse(localStorage.getItem('user_data'));
+                    const email = userData.email;
+
+                    const users = JSON.parse(localStorage.getItem('registered_users')) || [];
+
+                    const userIndex = users.findIndex(u => u.email === email);
+
+                    if (userIndex !== -1) {
+                        users[userIndex] = {
+                            name: userData.name,
+                            email: userData.email,
+                            password: userData.password,
+                            role: 'Mentee',
+                            bio: '',
+                            skills: [],
+                            interests: [],
+                            createdAt: userData.createdAt || new Date().toISOString()
+                        };
+
+                        localStorage.setItem('registered_users', JSON.stringify(users));
+
+                        localStorage.setItem('user_data', JSON.stringify(users[userIndex]));
+
+                        if (typeof NotificationService !== 'undefined') {
+                            NotificationService.success('Your profile has been reset.');
+                        }
+
+                        window.location.href = './profile.html';
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

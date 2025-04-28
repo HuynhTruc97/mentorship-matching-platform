@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login | Mentora</title>
+    <link rel="icon" href="../assets/img/logo.png" type="image/png">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/notifications.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- HEADER -->
+    <header class="header">
+        <div class="header__container">
+            <a href="../index.html" class="header__logo">
+                <img src="../assets/img/logo.png" alt="Logo" class="logo__image">
+                <p class="logo__name">Mentora</p>
+            </a>
+            <div class="hamburger-menu">
+                <div class="bar"></div>
+                <div class="bar"></div>
+                <div class="bar"></div>
+            </div>
+            <div class="nav-container">
+                <nav class="header__nav">
+                    <a href="../index.html" class="header__nav-item">Home</a>
+                    <a href="./discovery.html" class="header__nav-item">Discovery</a>
+                    <a href="./profile.html" class="header__nav-item hidden">My Profile</a>
+                </nav>
+                <nav class="header__nav">
+                    <a href="./login.html" class="header__nav-item header__nav-item--active">Login</a>
+                    <a href="./register.html" class="header__nav-item">Sign Up</a>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTENT -->
+    <main class="main">
+        <div class="auth-container">
+            <form id="login-form" class="form">
+                <div class="form__logo">
+                    <img src="../assets/img/logo.png" alt="Logo">
+                </div>
+                
+                <h1 class="form__title">Login to Mentora</h1>
+
+                <div class="form__group">
+                    <label for="email" class="form__label">Email</label>
+                    <input type="email" id="email" class="form__input" required>
+                    <div id="email-error" class="form__error">Please enter a valid email</div>
+                </div>
+
+                <div class="form__group">
+                    <label for="password" class="form__label">Password</label>
+                    <input type="password" id="password" class="form__input" required>
+                    <div id="password-error" class="form__error">Please enter your password</div>
+                </div>
+
+                <div class="form__group">
+                    <button type="submit" class="btn btn--primary btn--block full_width">Login</button>
+                </div>
+
+                <p class="form__footer">
+                    Don't have an account? <a href="./register.html">Sign up</a>
+                </p>
+            </form>
+        </div>
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <p>© 2025 Mentora. All rights reserved.</p>
+    </footer>
+
+    <!-- SCRIPTS -->
+    <script src="../assets/js/notificationService.js"></script>
+    <script src="../assets/js/auth.js"></script>
+    <script src="../assets/js/header.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            if (typeof NotificationService !== 'undefined') {
+                NotificationService.init();
+            }
+
+            // Get Login form
+            const loginForm = document.getElementById('login-form');
+            if (loginForm) {
+                loginForm.addEventListener('submit', function (e) {
+                    e.preventDefault();
+
+                    document.getElementById('email-error').classList.remove('form__error--show');
+                    document.getElementById('password-error').classList.remove('form__error--show');
+
+                    const email = document.getElementById('email').value.trim();
+                    const password = document.getElementById('password').value;
+
+                    // Validate email
+                    if (!email || !email.includes('@')) {
+                        document.getElementById('email-error').classList.add('form__error--show');
+                        return;
+                    }
+
+                    // Validate password
+                    if (!password) {
+                        document.getElementById('password-error').classList.add('form__error--show');
+                        return;
+                    }
+
+                    const users = JSON.parse(localStorage.getItem('registered_users')) || [];
+                    const user = users.find(u => u.email === email);
+
+                    // Not found email => Show error
+                    if (!user) {
+                        document.getElementById('email-error').textContent = 'Email not found. Please register first.';
+                        document.getElementById('email-error').classList.add('form__error--show');
+                        return;
+                    }
+
+                    // Incorrect password => Show error
+                    if (user.password !== password) {
+                        document.getElementById('password-error').textContent = 'Incorrect password';
+                        document.getElementById('password-error').classList.add('form__error--show');
+                        return;
+                    }
+
+                    // Login successful => Save auth token and user data
+                    localStorage.setItem('auth_token', 'user_authenticated');
+                    localStorage.setItem('user_data', JSON.stringify(user));
+
+                    if (typeof NotificationService !== 'undefined') {
+                        NotificationService.success('Login successful!');
+                    }
+
+                    window.location.href = '../index.html';
+                });
+            }
+        });
+    </script>
+</body>
+
+</html>
