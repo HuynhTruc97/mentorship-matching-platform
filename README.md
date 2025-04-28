@@ -4,15 +4,15 @@ Welcome to **Mentora**, a mentorship matching web application designed to connec
 
 ---
 
-## ✨ Live Demo
+## Live Demo
 
-- **Deployed URL**: [https://mentora-sandy.vercel.app/](https://mentora-sandy.vercel.app/)
+**Deployed URL**: [https://mentora-sandy.vercel.app/](https://mentora-sandy.vercel.app/)
 
 ---
 
-## 📊 Technologies Used
+## Technologies Used
 
-- **Frontend:**
+**Frontend:**
   - HTML5
   - CSS3 (Flexbox, Grid, Responsive Design)
   - Vanilla JavaScript (ES6+)
